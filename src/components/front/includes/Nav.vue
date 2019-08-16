@@ -15,10 +15,6 @@
           <v-btn flat>Home</v-btn>
         </router-link>
 
-
-        <router-link :to="{path:'/api'}">
-          <v-btn flat>Old Cart</v-btn>
-        </router-link>
       </div>
       <Dropdown1></Dropdown1>
     </v-toolbar>

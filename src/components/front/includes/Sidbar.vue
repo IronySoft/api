@@ -1,5 +1,5 @@
 <template>
-  <span >
+  <span>
 
     <v-toolbar flat>
       <v-list>
@@ -14,6 +14,17 @@
         <v-divider></v-divider>
 
     <v-list dense class="pt-0">
+      <router-link :to="{path:'/register'}">
+        <v-list-tile>
+        <v-list-tile-action>
+          <v-icon>supervised_user_circle</v-icon>
+        </v-list-tile-action>
+
+        <v-list-tile-content>
+          <v-list-tile-title>Account</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      </router-link>
       <v-list-tile>
         <v-list-tile-action>
           <v-icon>dashboard</v-icon>
@@ -43,9 +54,7 @@
 <script>
   export default {
     data() {
-      return {
-
-      }
+      return {}
     },
     mounted() {
       this.token()
