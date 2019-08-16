@@ -18,6 +18,9 @@ Vue.component(AlertError.name, AlertError)
 Vue.use(Vuetify)
 Vue.config.productionTip = false;
 
+
+
+
 let bus = new Vue();
 Vue.prototype.$bus = bus;
 Vue.prototype.$Swal = Swal;

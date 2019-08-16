@@ -65,14 +65,8 @@
       }
     },
 
-    mounted() {
-      console.log(localStorage.getItem('token'))
-    },
-    computed: {
-      token() {
-        return localStorage.getItem('token')
-      }
-    }, props: {
+
+   props: {
       source: String
     },
     components: {
