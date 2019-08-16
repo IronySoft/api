@@ -22,6 +22,7 @@
                 {{form.email}}
                 {{form.password}}
                 <v-card-actions>
+                   <router-link :to="{path:'/register'}">Register?</router-link>
                   <v-spacer></v-spacer>
                   <v-btn color="primary" :disabled="!valid" type="submit">Login</v-btn>
                 </v-card-actions>
@@ -52,7 +53,7 @@
 
         passwordRules: [
           v => !!v || 'Password is required',
-          v => (v && v.length <= 20 && v.length >= 5) || 'Password must be between 4 to 10 characters'
+          v => (v && v.length <= 30 && v.length >= 5) || 'Password must be between 4 to 10 characters'
         ],
         form: new Form({
           email: '',

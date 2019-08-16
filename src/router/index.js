@@ -6,6 +6,7 @@ import Login from '../components/login/Login'
 import Home from '../components/admin/Home'
 import Category from '../components/admin/category/Category.vue'
 import EditCategory from '../components/admin/category/EditCategory.vue'
+import Register from '../components/register/create'
 
 
 Vue.use(Router)
@@ -21,6 +22,10 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },{
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/home',
