@@ -13,7 +13,7 @@
 
                     <template v-slot:activator="{ on }">
                       <v-flex>
-                        <v-btn depressed color="red lighten-2" dark v-on="on">
+                        <v-btn @click="mode=false, brand.reset()" depressed color="red lighten-2" dark v-on="on">
                           <v-icon left>dashboard</v-icon>
                           Add New Brand
                         </v-btn>
@@ -22,14 +22,16 @@
                     </template>
 
                     <v-card>
-                      <v-form @submit.prevent="create()" ref="form">
+                      <v-form @submit.prevent="mode?update():create()" ref="form">
 
                         <v-card-title>
-                          <span class="headline">Create Brand</span>
+                          <span class="headline">{{mode?'Update':'Create'}} Brand</span>
+
                         </v-card-title>
                         <v-card-text>
                           <v-container grid-list-md>
                             <v-layout wrap>
+
 
                               <v-flex xs12>
                                 <v-text-field v-model="brand.name" label="Name"
@@ -57,7 +59,8 @@
                           <v-spacer></v-spacer>
                           <v-btn color="red darken-1" class="white--text" text @click="dialog = false">Close
                           </v-btn>
-                          <v-btn color="blue darken-1" class="primary" type="submit">Save
+                          <v-btn color="blue darken-1" class="primary" type="submit"> Save
+                            <!--{{mode? 'Update':'Create'}}-->
                           </v-btn>
                         </v-card-actions>
                       </v-form>
@@ -102,7 +105,7 @@
                       <i class="fa fa-edit"></i>
                     </button>
 
-                    <button class="btn btn-danger btn-sm"
+                    <button @click="destroyBrand(brand)" class="btn btn-danger btn-sm"
                             type="button">
                       <i class="fa fa-trash"></i>
                     </button>
@@ -125,7 +128,7 @@
 
 <script>
   import Vue from 'vue'
-  import { Form, HasError, AlertError } from 'vform'
+  import {Form, HasError, AlertError} from 'vform'
 
   Vue.component(HasError.name, HasError)
   Vue.component(AlertError.name, AlertError)
@@ -138,13 +141,15 @@
           name: '',
           description: '',
         }),
+        id: '',
 
-        brands:[],
+        brands: [],
+        mode: false,
 
         nameRules: [
           v => !!v || 'Name is required',
           v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-        ],descriptionRules: [
+        ], descriptionRules: [
           v => !!v || 'Description is required',
           v => (v && v.length >= 5) || 'Description must be at-least 5 characters',
         ],
@@ -153,48 +158,82 @@
     },
     methods: {
       create() {
-
-        let that =this
+        this.mode = false
+        let that = this
+        this.dialog = false
         if (this.$refs.form.validate()) {
           this.dialog = false
-          this.$axios.post('http://127.0.0.1:8000/api/auth/brand', this.brand).then(res=>{
+          this.$axios.post('http://127.0.0.1:8000/api/auth/brand', this.brand).then(res => {
             that.index()
+            that.brand.reset()
 
-          }).catch(err=>{
+          }).catch(err => {
             alert('No')
           })
           //console.log(this.teacher)
-        }else {
+        } else {
           this.dialog = true
         }
       },
-      index(){
-        let that =this
-        this.$axios.get('http://127.0.0.1:8000/api/auth/brand').then(responce=>{
-          that.brands=responce.data.brands
+      index() {
+        let that = this
+        this.$axios.get('http://127.0.0.1:8000/api/auth/brand').then(responce => {
+          that.brands = responce.data.brands
           //alert(responce)
-        }).catch(error=>{
+        }).catch(error => {
           alert('No')
         })
       },
-      token(){
-        let token= localStorage.getItem('token')
-        if (!token){
+      token() {
+        let token = localStorage.getItem('token')
+        if (!token) {
           this.$router.push('/')
         } else {
           this.$router.push('/brand')
         }
       },
 
-      editBrand(brand){
-        this.dialog=true
+      editBrand(brand) {
+        this.id = brand.id
+        this.mode = true
         this.brand.reset()
         this.brand.fill(brand)
+        this.dialog = true
 
+
+      },
+      update() {
+        let that = this
+        if (this.$refs.form.validate()) {
+          this.dialog = false
+          this.$axios.put('http://127.0.0.1:8000/api/auth/brand/' + this.id, this.brand).then(res => {
+            that.index()
+            that.brand.reset()
+
+          }).catch(err => {
+            alert()
+          })
+        } else {
+          this.dialog = true
+        }
+      },
+      destroyBrand(brand) {
+        if (confirm('Are you sure?')) {
+          let that = this
+          this.dialog = false
+          this.$axios.delete('http://127.0.0.1:8000/api/auth/brand/' + brand.id)
+            .then(res => {
+            that.index()
+            that.brand.reset()
+
+          }).catch(err => {
+            alert('Data not deleted')
+          })
+        }
 
       }
     },
-    created() {
+    mounted() {
       this.index()
       this.token()
 
