@@ -69,10 +69,9 @@
           this.$bus.$emit('loadingStatus', true);
 
           let that = this
-          // this.$http.post('http://127.0.0.1:8000/api/auth/login', this.form)
           this.$axios.post('http://127.0.0.1:8000/api/auth/login', this.form)
             .then(function (res) {
-              console.log(res)
+              console.log(res);
               localStorage.setItem('token', res.data.access_token);
               let token = localStorage.getItem('token')
               console.log(token)

@@ -54,7 +54,9 @@
 <script>
   export default {
     data() {
-      return {}
+      return {
+
+      }
     },
     mounted() {
       this.token()
@@ -63,6 +65,7 @@
     methods: {
       token() {
         let token = localStorage.getItem('token')
+
         if (!token) {
           this.$router.push('/login')
         } else
