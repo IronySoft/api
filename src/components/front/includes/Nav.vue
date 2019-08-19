@@ -6,8 +6,11 @@
 
       </v-toolbar-side-icon>
 
-      <router-link :to="{path:'/brand'}">
+      <router-link v-if="!checker" :to="{path:'/brand'}">
         <v-toolbar-title>User Brand</v-toolbar-title>
+      </router-link>
+      <router-link v-if="checker" :to="{path:'/user'}">
+        <v-toolbar-title>User Info</v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>
       <div class="hidden-sm-and-down">
@@ -33,7 +36,7 @@
             </v-list-tile-avatar>
 
             <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
+              <v-list-tile-title>{{name}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -55,8 +58,9 @@
     name: "Nav",
     data() {
       return {
-        check: false,
+        checker: '',
         drawer: null,
+        name:''
 
       }
     },
@@ -68,6 +72,20 @@
     components: {
       'my-side-bar':Sidbar,
       Dropdown1
+    },
+    methods:{
+      user_name(){
+        this.name = localStorage.getItem('name')
+        let type = localStorage.getItem('type')
+        if (type==='bearer') {
+          this.checker =true
+        }else {
+          this.checker =false
+        }
+      }
+    },
+    mounted() {
+       this.user_name()
     }
 
   }

@@ -74,9 +74,9 @@
               console.log(res);
               localStorage.setItem('token', res.data.access_token);
               localStorage.setItem('type', res.data.token_type);
+              localStorage.setItem('name', res.data.name);
               let token = localStorage.getItem('token')
-              let type = localStorage.getItem('type')
-              console.log(token)
+
               if (res.status !== 200) {
                 alert('Not Possible')
               } else {
@@ -96,6 +96,7 @@
                 }
               }
             }).catch(function (err) {
+              console.log(err.error)
             if (err) {
               that.$bus.$emit('loadingStatus', false);
               that.$iziToast.error({

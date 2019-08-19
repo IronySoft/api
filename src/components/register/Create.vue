@@ -68,9 +68,13 @@
         name: "create",
       methods:{
           registerMethod(){
-            this.$axios.post('http://127.0.0.1:8000/api/register', this.register).then(res=>{
-              console.log(res)
-            }).catch(err=>{
+            this.$axios.post('http://127.0.0.1:8000/api/register', this.register).then(response=>{
+              console.log(response)
+            }).catch(error=>{
+              console.log(error.response)
+              if (status===500){
+                alert('hey');
+              }
               alert('No')
             })
 

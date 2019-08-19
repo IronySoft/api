@@ -29,7 +29,7 @@ const store = new Vuex.Store({
     fetchBrands(context) {
 
       axios.get('http://127.0.0.1:8000/api/auth/brand').then(response => {
-        console.log(response.data.data)
+        //console.log(response.data.data)
 
         context.commit('fetchBrands', response.data.data)
       }).catch(error => {
@@ -38,7 +38,7 @@ const store = new Vuex.Store({
     }, fetchUsers(context) {
 
       axios.get('http://127.0.0.1:8000/api/auth/user').then(response => {
-        console.log(response.data.data)
+        //console.log(response.data.data)
 
         context.commit('fetchUsers', response.data.data)
       }).catch(error => {

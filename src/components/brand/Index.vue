@@ -137,6 +137,7 @@
     data() {
       return {
         dialog: false,
+        checker: '',
         brand: new Form({
           name: '',
           description: '',
@@ -164,7 +165,6 @@
         if (this.$refs.form.validate()) {
           this.dialog = false
           this.$axios.post('http://127.0.0.1:8000/api/auth/brand', this.brand).then(res => {
-            // that.index()
             that.$store.dispatch('fetchBrands')
             that.brand.reset()
 
@@ -186,14 +186,14 @@
       //     alert('No')
       //   })
       // },
-      token() {
-        let token = localStorage.getItem('token')
-        if (!token) {
-          this.$router.push('/')
-        } else {
-          this.$router.push('/brand')
-        }
-      },
+      // token() {
+      //   let token = localStorage.getItem('token')
+      //   if (!token) {
+      //     this.$router.push('/')
+      //   } else {
+      //     this.$router.push('/brand')
+      //   }
+      // },
 
       editBrand(brand) {
         this.id = brand.id
@@ -209,7 +209,6 @@
         if (this.$refs.form.validate()) {
           this.dialog = false
           this.$axios.put('http://127.0.0.1:8000/api/auth/brand/' + this.id, this.brand).then(res => {
-            // that.index()
             that.$store.dispatch('fetchBrands')
             that.brand.reset()
 
@@ -235,12 +234,24 @@
           })
         }
 
+      },
+      chcek(){
+        let token = localStorage.getItem('token')
+        let type = localStorage.getItem('type')
+        if (token && type==='bearer') {
+          this.$router.push('/user')
+        }else if (token && type==='user') {
+          this.$router.push('/brand')
+        }else {
+          this.$router.push('/login')
+        }
       }
     },
     mounted() {
       //this.index()
       this.$store.dispatch('fetchBrands')
-      this.token()
+      //this.token()
+      this.chcek()
 
     },
     computed: {
