@@ -6,8 +6,8 @@
 
       </v-toolbar-side-icon>
 
-      <router-link :to="{path:'/'}">
-        <v-toolbar-title>Shopping Cart Home</v-toolbar-title>
+      <router-link :to="{path:'/brand'}">
+        <v-toolbar-title>User Brand</v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>
       <div class="hidden-sm-and-down">

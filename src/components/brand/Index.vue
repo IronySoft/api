@@ -91,7 +91,7 @@
                 </thead>
 
                 <tbody>
-
+{{brands}}
                 <tr v-for="(brand, index) in brands">
                   <th>{{index++}}</th>
                   <td>{{brand.name}}</td>
@@ -143,7 +143,7 @@
         }),
         id: '',
 
-        brands: [],
+       // brands: [],
         mode: false,
 
         nameRules: [
@@ -164,7 +164,8 @@
         if (this.$refs.form.validate()) {
           this.dialog = false
           this.$axios.post('http://127.0.0.1:8000/api/auth/brand', this.brand).then(res => {
-            that.index()
+            // that.index()
+            that.$store.dispatch('fetchBrands')
             that.brand.reset()
 
           }).catch(err => {
@@ -175,15 +176,16 @@
           this.dialog = true
         }
       },
-      index() {
-        let that = this
-        this.$axios.get('http://127.0.0.1:8000/api/auth/brand').then(responce => {
-          that.brands = responce.data.brands
-          //alert(responce)
-        }).catch(error => {
-          alert('No')
-        })
-      },
+      // index() {
+      //   let that = this
+      //   this.$axios.get('http://127.0.0.1:8000/api/auth/brand').then(responce => {
+      //     that.brands = responce.data.data
+      //     //alert(responce)
+      //     console.log(responce.data.data)
+      //   }).catch(error => {
+      //     alert('No')
+      //   })
+      // },
       token() {
         let token = localStorage.getItem('token')
         if (!token) {
@@ -207,7 +209,8 @@
         if (this.$refs.form.validate()) {
           this.dialog = false
           this.$axios.put('http://127.0.0.1:8000/api/auth/brand/' + this.id, this.brand).then(res => {
-            that.index()
+            // that.index()
+            that.$store.dispatch('fetchBrands')
             that.brand.reset()
 
           }).catch(err => {
@@ -223,10 +226,11 @@
           this.dialog = false
           this.$axios.delete('http://127.0.0.1:8000/api/auth/brand/' + brand.id)
             .then(res => {
-            that.index()
-            that.brand.reset()
+             // that.index()
+              that.$store.dispatch('fetchBrands')
+              that.brand.reset()
 
-          }).catch(err => {
+            }).catch(err => {
             alert('Data not deleted')
           })
         }
@@ -234,9 +238,16 @@
       }
     },
     mounted() {
-      this.index()
+      //this.index()
+      this.$store.dispatch('fetchBrands')
       this.token()
 
+    },
+    computed: {
+      brands() {
+        return this.$store.getters.getBrands
+
+      }
     }
   }
 </script>

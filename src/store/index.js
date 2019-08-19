@@ -1,45 +1,39 @@
 //
-// import Vue from 'vue'
-// import Vuex from 'vuex'
-// import axios from 'axios'
-// Vue.use(Vuex);
-// const store = new Vuex.Store({
-//   state: {
-//     inventory: [],
-//     cart: [],
-//     categories: [],
-//   },
-//
-//   getters: {
-//     getInventory(state) {
-//       return state.inventory
-//     },
-//     getCart(state) {
-//       return state.cart
-//     },getCategories(state) {
-//       return state.categories
-//     },
-//
-//   },
-//   mutations: {
-//
-//     fetchCategoryInfo(state, data){
-//       state.categories = data
-//     }
-//   },
-//   actions:{
-//     fetchCategoryInfo(context){
-//       axios.post('http://127.0.0.1:8000/api/auth/category-info').then(res=>{
-//         console.log(res.data.categories)
-//
-//         context.commit('fetchCategoryInfo',res.data.categories)
-//       }).catch(err=>{
-//         alert('No Cat data')
-//       })
-//     }
-//   }
-//
-// });
-//
-// export default store;
-//
+import Vue from 'vue'
+import Vuex from 'vuex'
+import axios from 'axios'
+Vue.use(Vuex);
+const store = new Vuex.Store({
+  state: {
+    brands: [],
+  },
+
+  getters: {
+    getBrands(state) {
+      return state.brands
+    },
+  },
+  mutations: {
+    fetchBrands(state, data){
+      state.brands = data
+    }
+  },
+  actions:{
+
+    fetchBrands(context){
+
+      axios.get('http://127.0.0.1:8000/api/auth/brand').then(response => {
+        //that.brands = response.data.data
+        console.log(response.data.data)
+
+        context.commit('fetchBrands' ,response.data.data)
+      }).catch(error => {
+        alert('Server Error')
+      })
+    }
+  }
+
+});
+
+export default store;
+
