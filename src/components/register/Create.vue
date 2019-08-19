@@ -74,7 +74,15 @@
               alert('No')
             })
 
-          }
+          },
+        token() {
+          let token = localStorage.getItem('token')
+
+          if (!token) {
+            this.$router.push('/register')
+          } else
+            this.$router.push('/home')
+        },
       },
       data(){
           return{
@@ -85,7 +93,11 @@
               password_confirmation:'',
             }
           }
+      },
+      mounted() {
+          this.token()
       }
+
     }
 </script>
 

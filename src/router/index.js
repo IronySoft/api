@@ -4,6 +4,7 @@ import Login from '../components/login/Login'
 import Home from '../components/home/Index'
 import Register from '../components/register/Create'
 import BrandIndex from '../components/brand/Index'
+import UserIndex from '../components/user/Index'
 
 
 Vue.use(Router)
@@ -27,6 +28,10 @@ export default new Router({
       path: '/brand',
       name: 'brand.index',
       component: BrandIndex
+    }, {
+      path: '/user',
+      name: 'user.index',
+      component: UserIndex
     },
     {
       path: '/home',

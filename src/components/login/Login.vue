@@ -22,7 +22,7 @@
                 {{form.email}}
                 {{form.password}}
                 <v-card-actions>
-                   <router-link :to="{path:'/register'}">Register?</router-link>
+                  <router-link :to="{path:'/register'}">Register?</router-link>
                   <v-spacer></v-spacer>
                   <v-btn color="primary" :disabled="!valid" type="submit">Login</v-btn>
                 </v-card-actions>
@@ -73,7 +73,9 @@
             .then(function (res) {
               console.log(res);
               localStorage.setItem('token', res.data.access_token);
+              localStorage.setItem('type', res.data.token_type);
               let token = localStorage.getItem('token')
+              let type = localStorage.getItem('type')
               console.log(token)
               if (res.status !== 200) {
                 alert('Not Possible')
